@@ -4,6 +4,7 @@ import './media.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { Search } from '@material-ui/icons';
 
 function App() {
   const [text, setText] = useState('');
@@ -39,11 +40,12 @@ function App() {
           />
           <Button variant="contained" color="primary"
             onClick={getMemes}>
+            <Search />
             Search
           </Button>
         </div>
-        {loading && <LinearProgress />}
       </header>
+      {loading && <LinearProgress />}
       <div className="memes">
         {memes.map((meme, i)=> <Meme key={i} {...meme} />)}
       </div>
@@ -51,9 +53,10 @@ function App() {
   );
 }
 
-function Meme({title, images}) {
-  return <div className="meme">
-    <img src={images.fixed_height.url} alt={title}/>
+function Meme({images, title}) {
+  const url = images.fixed_height.url
+  return <div className="meme" onClick={()=>window.open(url, '_blank')}>
+    <img height="200" src={url} alt={title}/>
     <div className="meme-title">{title}</div>
   </div>
 }
